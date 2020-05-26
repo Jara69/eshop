@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>{{name}}</h1>
+  <p>{{description}}</p>
+  <div class="d-flex flex-row flex-wrap container">
+    <div class="card my-3 mx-3" style="width: 18rem;" *ngFor="let product of productArr">
+      <img class="card-img-top" [src]="'http://kodytek.cz:8080/rest-api/' + product.images[0].miniaturePath" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{product.title}}</h5>
+        <h3>{{ratingNumber}}</h3>
+        <p class="card-text">{{product.price / 100}} E</p>
+        <a class="btn btn-danger" (click)="getProduct(product.id)">Zboží jkbafj abfjabfajb </a>
+      </div>
+    </div>
+  </div>
+<router-outlet></router-outlet>
