@@ -5,11 +5,8 @@ import {ProductsService} from '../services/products.service';
 import {ProductPage} from '../models/ProductPage.model';
 import {Product} from '../models/Product.model';
 import {Ratings} from '../models/Ratings.model';
-import {HttpHeaders} from '@angular/common/http';
-import Host from '../Host';
-import {HttpClient} from '@angular/common/http';
-import {formatPercent} from '@angular/common';
-import {Category} from '../models/Category.model';
+import * as md from 'markdown-it';
+
 
 @Component({
   selector: 'app-product',
@@ -25,9 +22,9 @@ export class ProductComponent implements OnInit {
   public avgRatingsArr: number[];
   public sum: number;
   public avgRatingsNumber: number;
-  public id: number;
 
-  constructor(private activatedRoute: ActivatedRoute, private products: ProductsService, private http: HttpClient, private kategorie: Category) { }
+
+  constructor(private activatedRoute: ActivatedRoute, private products: ProductsService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(i => {
@@ -35,14 +32,15 @@ export class ProductComponent implements OnInit {
         console.log(data);
         this.product = data;
         this.ratings = data.ratings;
+        this.description = data.description;
         this.avgRatingsArr = this.ratings.map(l => l.percent);
         this.sum = this.avgRatingsArr.reduce((a, b) => a + b, 0);
         this.avgRatingsNumber = this.sum / this.ratings.length;
+
+        const result = md().renderInline(this.product.description);
+        this.product.description = result;
       });
     });
-  }
-  IgotClicked() {
-  console.log(this.products);
   }
 
 }

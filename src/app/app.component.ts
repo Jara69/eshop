@@ -18,7 +18,7 @@ export class AppComponent {
   public length: number;
   public id: number;
 
-  constructor(private httpClient: HttpClient, private categori: CategoriesService, private router: Router) {
+  constructor(public httpClient: HttpClient, public categori: CategoriesService, public router: Router) {
     this.categori.getCategories()
       .subscribe(
         (data: Category[]) => {

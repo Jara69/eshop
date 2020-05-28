@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {CategoriesService} from '../services/categories.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Category} from '../models/Category.model';
 import {CategoryPage} from '../models/CategoryPage.model';
 import {Product} from '../models/Product.model';
 import {ProductsService} from '../services/products.service';
-import {Images} from '../models/Images.model';
 import * as md from 'markdown-it';
-import {Ratings} from '../models/Ratings.model';
-import Host from '../Host';
 
 @Component({
   selector: 'app-category',
@@ -22,12 +18,9 @@ export class CategoryComponent implements OnInit {
   public description: string;
   public product: Product;
   public productArr: Product[];
-  public ratingOfProduct: number[];
-  public avgRatingsArr: number[];
-  public sum: number;
-  public avgRatingsNumber: Ratings[];
+  public categoryId: number;
   public ratingNumber: number;
-
+  public pagesCount: number;
 
   constructor(private http: HttpClient,
               private category: CategoriesService,
@@ -39,24 +32,36 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(i => {
       this.category.getCategory(i.id).subscribe((data: CategoryPage) => {
-        this.productArr = data.products;
         console.log(data);
         this.name = data.category.name;
+        this.categoryId = data.category.id;
         this.description = data.category.description;
-        // tslint:disable-next-line:prefer-for-of
-
+        this.productArr = data.products;
+        this.pagesCount = data.pagesCount + 1;
         const result = md().renderInline(this.description);
         this.description = result;
-        console.log(this.productArr);
-
       });
     });
+  }
+  get pageCount(): Array<number> {
+    console.log(Array.from(new Array(this.pagesCount).keys()));
+    return Array.from(new Array(this.pagesCount).keys());
+  }
+  loadPage(id: number, page: number) {
+    this.category.getProductPage(id, page).subscribe(
+      (data: CategoryPage) => {
+        console.log(data);
+        this.productArr = data.products;
+
+      }, (error) => {
+
+      }
+    );
+    console.log(page);
   }
 
   getProduct(id: number) {
     this.router.navigate(['/product'], {queryParams: {id}});
-    console.log('more gadzo');
-
   }
 
 }

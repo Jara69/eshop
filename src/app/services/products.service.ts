@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import Host from '../Host';
 import {CategoryPage} from '../models/CategoryPage.model';
 import {Product} from '../models/Product.model';
-
 import {Images} from '../models/Images.model';
 
 @Injectable({
@@ -19,7 +18,5 @@ export class ProductsService {
     return this.http.get<Product>('/api/products/' + id, {headers});
   }
 
-  getProductRating() {
-
-  }
 }
+
