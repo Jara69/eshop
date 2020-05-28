@@ -15,9 +15,8 @@ export class CategoriesService {
   getCategories() {
     const headers = new HttpHeaders().set('access-token', Host.token);
 
-    return this.http.get<Category[]>('/api/categories', {headers});
+    return this.http.get<Category[]>('api/categories', {headers});
   }
-
   getCategory(id: number) {
     const headers = new HttpHeaders().set('access-token', Host.token);
 

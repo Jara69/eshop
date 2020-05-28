@@ -3,7 +3,7 @@ import {Category} from './models/Category.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CategoriesService} from './services/categories.service';
 import {Router} from '@angular/router';
-import Host from './host';
+import Host from './Host';
 import {query} from '@angular/animations';
 
 @Component({
@@ -26,12 +26,13 @@ export class AppComponent {
           console.log(data);
         }, (error) =>  {
           console.log(error);
+          console.log(this.id);
         }
       );
   }
 
   clickCategory(id: number) {
     this.router.navigate(['/category'], {queryParams: {id}});
-    console.log(id);
+    console.log();
   }
 }

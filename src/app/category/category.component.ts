@@ -9,7 +9,7 @@ import {ProductsService} from '../services/products.service';
 import {Images} from '../models/Images.model';
 import * as md from 'markdown-it';
 import {Ratings} from '../models/Ratings.model';
-import Host from '../host';
+import Host from '../Host';
 
 @Component({
   selector: 'app-category',
@@ -39,10 +39,10 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(i => {
       this.category.getCategory(i.id).subscribe((data: CategoryPage) => {
+        this.productArr = data.products;
         console.log(data);
         this.name = data.category.name;
         this.description = data.category.description;
-        this.productArr = data.products;
         // tslint:disable-next-line:prefer-for-of
 
         const result = md().renderInline(this.description);

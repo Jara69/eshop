@@ -6,9 +6,10 @@ import {ProductPage} from '../models/ProductPage.model';
 import {Product} from '../models/Product.model';
 import {Ratings} from '../models/Ratings.model';
 import {HttpHeaders} from '@angular/common/http';
-import Host from '../host';
+import Host from '../Host';
 import {HttpClient} from '@angular/common/http';
 import {formatPercent} from '@angular/common';
+import {Category} from '../models/Category.model';
 
 @Component({
   selector: 'app-product',
@@ -24,9 +25,9 @@ export class ProductComponent implements OnInit {
   public avgRatingsArr: number[];
   public sum: number;
   public avgRatingsNumber: number;
+  public id: number;
 
-
-  constructor(private activatedRoute: ActivatedRoute, private products: ProductsService, private http: HttpClient) { }
+  constructor(private activatedRoute: ActivatedRoute, private products: ProductsService, private http: HttpClient, private kategorie: Category) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(i => {
@@ -39,6 +40,9 @@ export class ProductComponent implements OnInit {
         this.avgRatingsNumber = this.sum / this.ratings.length;
       });
     });
+  }
+  IgotClicked() {
+  console.log(this.products);
   }
 
 }
